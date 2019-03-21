@@ -1,0 +1,16 @@
+g++ Version3Box/Snake/main.cpp Version3Box/Box.cpp Version3Box/Snake/GridPiece.cpp -o firstSquareV3 -Llib/sfml/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+vpath %.h Version3Box/SharedHeaders:Version3Box/Snake/Headers
+vpath %.cpp Version3Box/SharedCppFiles:Version3Box/Snake/CppFiles
+
+objects = main.o Box.o GridPiece.o
+
+SnakeGame : $(objects)
+	g++ -Wall -W -pedantic -o SnakeGame $(objects) -Llib/sfml/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+$(objects) : Box.h
+main.o GridPiece.o : GridPiece.h
+
+.PHONY : clean
+clean :
+	rm SnakeGame $(objects)

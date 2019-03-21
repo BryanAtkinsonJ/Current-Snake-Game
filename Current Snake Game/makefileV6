@@ -1,0 +1,42 @@
+# https://www.gnu.org/software/make/manual/make.html#Wildcards
+# make --file=makefileV6 clean
+# ./SnakeGame 800 800 80 80
+# cd ~/Desktop/GameFolder_Plus_AI/GameExternalSquares
+
+# Specify the final target name
+EXE := SnakeGame
+
+# Specify the paths for make to search and find files
+vpath %.h Version6Box/SharedHeaders:Version6Box/Snake/Headers
+vpath %.cpp Version6Box/SharedCppFiles:Version6Box/Snake/CppFiles
+
+# Specify preprocessor flags (This is a built-in variable)
+CPPFLAGS := -I../Include
+# Required flags to enable the automatic dependency generation by the compiler
+CPPFLAGS += -MMD -MP
+
+# Specify compiler flags (This is a built-in variable)
+# Basic Warning Flags
+CXXFLAGS := -Wall -W -pedantic
+
+# Specify linker flags (This is a built-in variable)
+LDFLAGS := -L../lib -lstdc++ -Llib/sfml/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+#Specify linker libraries (This is a built-in variable)
+LDLIBS := -lm
+
+# Specify all of the objects used in compilation and infer recipes
+objects = main.o Box.o GridPiece.o
+
+# The compiling rule
+SnakeGame : $(objects)
+	$(CXX) $(CXXFLAGS) -o $(EXE) $(objects) $(LDFLAGS) $(LDLIBS)
+
+# Dependency of each file
+$(objects) : Box.h
+main.o GridPiece.o : GridPiece.h
+
+# Remove each intermediate file generated
+.PHONY : clean
+clean :
+	rm $(objects) *.d
