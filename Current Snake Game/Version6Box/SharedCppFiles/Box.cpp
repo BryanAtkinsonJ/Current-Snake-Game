@@ -1,5 +1,5 @@
 	#include "../SharedHeaders/Box.h"
-1
+
 	// See Version 1 - 4 for info on using templates
 
 	namespace GameBoxes
